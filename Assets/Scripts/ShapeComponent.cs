@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShapeComponent : MonoBehaviour
 {
@@ -8,5 +9,5 @@ public class ShapeComponent : MonoBehaviour
     public enum Color { Red, Green, Blue};
     public Shape myShape;
     public Color myColor;
-    public Texture UIImage;
+    public Sprite UIImage;
 }

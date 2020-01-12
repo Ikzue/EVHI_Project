@@ -63,9 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraFunctions.cs" />
-    <Compile Include="Assets\Scripts\InstantiateAndSelectShape.cs" />
+    <Compile Include="Assets\Scripts\InitiateShapePosition.cs" />
+    <Compile Include="Assets\Scripts\SelectionShape.cs" />
     <Compile Include="Assets\Scripts\ShapeComponent.cs" />
-    <Compile Include="Assets\Scripts\UIFunctions.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/EVHIProject/EVHIProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
