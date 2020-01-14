@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Position = System.Collections.Generic.KeyValuePair<int, int>;
 
 public class InitiateShapePosition : MonoBehaviour
@@ -19,23 +20,22 @@ public class InitiateShapePosition : MonoBehaviour
     public GameObject ShapesScreen1;
     public GameObject ShapesScreen2;
     public GameObject ShapesScreen3;
+
+    public GameObject readyButton;
     // Start is called before the first frame update
     void Start()
     {
         initializeShapes();
         initializeAvailablePositions();
         randomlyPositionShapes();
+    }
+
+    public void initializeRound() {
         GameObject go = GameObject.Find("MainLoop");
         SelectionShape s = go.GetComponent<SelectionShape>();
-        s.initializeSelection(5);
+        s.initializeSelection(15);
+        readyButton.GetComponent<Button>().interactable = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void initializeShapes() {
         int numColor, numShape;
         ListShapes = new GameObject[nbColors, nbShapes];
@@ -56,8 +56,7 @@ public class InitiateShapePosition : MonoBehaviour
         }
     }
 
-    private void randomlyPositionShapes(int ShapesToPosition = 8) {
-        //Debug.Log(availablePositions.Count);
+    private void randomlyPositionShapes(int ShapesToPosition = 15) {
         Random rnd = new Random();
         GameObject currentScreen;
         GameObject newShape;
@@ -65,47 +64,27 @@ public class InitiateShapePosition : MonoBehaviour
         int shape;
         int listPosition;
         Position position;
-        for (int i = 0; i < ShapesToPosition; i++) {
-            color = Random.Range(0, nbColors);
-            shape = Random.Range(0, nbShapes);
-            listPosition = Random.Range(0, availablePositions.Count);
-            position = availablePositions[listPosition];
-            availablePositions.RemoveAt(listPosition);
+        for (color = 0; color < nbColors; color++) {
+            for (shape = 0; shape < nbShapes; shape++) {
+                //color = Random.Range(0, nbColors);
+                //shape = Random.Range(0, nbShapes);
+                listPosition = Random.Range(0, availablePositions.Count);
+                position = availablePositions[listPosition];
+                availablePositions.RemoveAt(listPosition);
 
-            currentScreen = getScreen(position.Key);
+                currentScreen = getScreen(position.Key);
 
-            newShape = Instantiate(ListShapes[color, shape]);
-            newShape.SetActive(true);
-            newShape.transform.parent = currentScreen.transform;
-            newShape.transform.localPosition = getPosition(position);
+                newShape = Instantiate(ListShapes[color, shape]);
+                newShape.SetActive(true);
+                newShape.transform.parent = currentScreen.transform;
+                newShape.transform.localPosition = getPosition(position);
+            }
         }
+        
         //Debug.Log(position);
         //Debug.Log(availablePositions.Count);
     }
-    /*
-    private void randomlyPositionShapes(int ShapesToPosition = 16) {
-        Random rnd = new Random();
-        GameObject currentScreen;
-        GameObject newShape;
-        int nbScreen;
-        int color;
-        int shape;
-        for (int i = 0; i < ShapesToPosition; i++) {
-            nbScreen = Random.Range(0, nbScreens);
-            currentScreen = getScreen(nbScreen);
-            color = Random.Range(0, nbColors);
-            shape = Random.Range(0, nbShapes);
-            newShape = Instantiate(ListShapes[color, shape]);
-            newShape.SetActive(true);
-            newShape.transform.parent = currentScreen.transform;
 
-            float newX = Random.Range(-screenWidth, screenWidth);
-            float newY = 2;
-            float newZ = Random.Range(-screenHeight, screenHeight);
-            newShape.transform.localPosition = new Vector3(newX, newY, newZ);
-        }
-    }
-    */
     private GameObject getScreen(int numScreen) {
         if (numScreen == 0)
             return ShapesScreen1;
